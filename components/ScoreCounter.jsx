@@ -1,7 +1,15 @@
-function ScoreCounter({ score }) {
-  //score = score.toString().padStart(6, "0");
+function ScoreCounter({ score, setUpdateScoreModalState }) {
+  function OpenScoreModal() {
+    setUpdateScoreModalState([
+      {
+        visibility: "visible",
+        currentScore: score,
+      },
+    ]);
+  }
+
   return (
-    <div className="c-score-counter">
+    <div className="c-score-counter" onClick={() => OpenScoreModal()}>
       {score}
       <span>p</span>
     </div>

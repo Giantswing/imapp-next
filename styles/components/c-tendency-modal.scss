@@ -1,5 +1,5 @@
 .c-tendency-modal {
-  position: absolute;
+  position: fixed;
   width: inherit;
   z-index: 3;
   background-color: white;
@@ -8,6 +8,7 @@
   width: calc(100vw - $o-container__gutter-single * 2);
   padding: 40px 20px;
   box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.65);
+  font-family: $font--primary;
 
   &--hidden {
     display: none;
@@ -23,14 +24,17 @@
     flex-direction: column;
     gap: 15px;
   }
+}
 
-  &::before {
-    z-index: -1;
-    content: "";
-    position: fixed;
-    inset: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(255, 255, 255, 0.35);
+.c-tendency-modal__bg {
+  position: fixed;
+  z-index: 2;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(255, 255, 255, 0.35);
+
+  &--hidden {
+    display: none;
   }
 }

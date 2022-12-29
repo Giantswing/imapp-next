@@ -3,9 +3,13 @@
 
   &__main {
     background-color: gray;
-    padding: 10px 20px;
+    padding: 20px 20px;
+    display: flex;
+    justify-content: space-between;
+
     &-title {
       @include tendency_title;
+      width: 80%;
       margin: 0;
     }
   }
@@ -14,11 +18,19 @@
     .c-tendency__main {
       background-color: $positive-color !important;
     }
+
+    .c-tendency__description-cost {
+      color: $positive-color !important;
+    }
   }
 
   &--negative {
     .c-tendency__main {
       background-color: $negative-color !important;
+    }
+
+    .c-tendency__description-cost {
+      color: $negative-color !important;
     }
   }
 
@@ -27,14 +39,9 @@
     cursor: pointer;
   }
 
-  &__title {
-    @include tendency_title;
-    margin: 0;
-  }
-
   &__description {
     background-color: $dark-gray;
-    padding: 10px 20px;
+    padding: 7px 20px;
     &-cost {
       @include tendency_cost;
       margin: 0;
