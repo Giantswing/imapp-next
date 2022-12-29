@@ -1,23 +1,36 @@
 import Image from "next/image";
 
-function Tendency({
-  title,
-  cost,
-  id,
-  tendencyState,
-  callback,
-  optionsFunction,
-}) {
+function Tendency({ tendencyList, id, setScore, setTendencyModalState }) {
+  const tendency = tendencyList.find((tendency) => tendency.id === id);
+
+  function OpenEditTendencyModal() {
+    setTendencyModalState([
+      {
+        title: tendency.name,
+        cost: tendency.cost,
+        id: tendency.id,
+        visibility: "visible",
+        editMode: true,
+      },
+    ]);
+  }
+
+  function ChangeScore() {
+    if (tendency.type === "positive")
+      setScore((prevScore) => prevScore + tendency.cost);
+    else setScore((prevScore) => prevScore - tendency.cost);
+  }
+
   return (
-    <div className={`c-tendency c-tendency--${tendencyState}`}>
+    <div className={`c-tendency c-tendency--${tendency.type}`}>
       <div className="c-tendency__main">
-        <h3 className="c-tendency__main-title" onClick={callback}>
-          {title}
+        <h3 className="c-tendency__main-title" onClick={() => ChangeScore()}>
+          {tendency.title}
         </h3>
         <Image
           src="options-icon.svg"
           onClick={() => {
-            optionsFunction(title, cost, id);
+            OpenEditTendencyModal();
           }}
           alt="options"
           width={20}
@@ -25,7 +38,7 @@ function Tendency({
         />
       </div>
       <div className="c-tendency__description">
-        <h4 className="c-tendency__description-cost">{cost}p</h4>
+        <h4 className="c-tendency__description-cost">{tendency.cost}p</h4>
       </div>
     </div>
   );

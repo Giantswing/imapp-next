@@ -28,24 +28,9 @@ function Home() {
     },
   ]);
 
-  const [positiveTendencies, setPositiveTendencies] = useState([
-    {
-      name: "Positive Tendency 1",
-      cost: 50,
-      id: 654321,
-    },
-  ]);
-  const [negativeTendencies, setnegativeTendencies] = useState([
-    {
-      name: "Negative Tendency 1",
-      cost: 50,
-      id: 123456,
-    },
-  ]);
-
   const [tendencyList, setTendencyList] = useState([
     {
-      name: "Positive Tendency 1",
+      title: "Positive Tendency 1",
       cost: 50,
       id: 654321,
       type: "positive",
@@ -65,8 +50,7 @@ function Home() {
         body: JSON.stringify([
           {
             "Current-Score": newScore,
-            "Positive-Tendencies": positiveTendencies,
-            "Negative-Tendencies": negativeTendencies,
+            "Tendency-List": tendencyList,
           },
         ]),
         headers: {
@@ -167,8 +151,7 @@ function Home() {
       .then((response) => response.json())
       .then((data) => {
         setScore(data[0]["Current-Score"]);
-        setPositiveTendencies(data[0]["Positive-Tendencies"]);
-        setnegativeTendencies(data[0]["Negative-Tendencies"]);
+        setTendencyList(data[0]["Tendency-List"]);
         console.log(data);
       });
   }, []);
@@ -199,33 +182,17 @@ function Home() {
         />
 
         <div className="tendency-container">
-          {currentTendencyView === "positive"
-            ? positiveTendencies.map((tendency) => (
-                <Tendency
-                  title={tendency.name}
-                  cost={tendency.cost}
-                  tendencyState="positive"
-                  key={tendency.id}
-                  id={tendency.id}
-                  callback={() => ExchangeScore(tendency.cost)}
-                  optionsFunction={(title, cost, id) =>
-                    EditTendencyModal(title, cost, id)
-                  }
-                />
-              ))
-            : negativeTendencies.map((tendency) => (
-                <Tendency
-                  title={tendency.name}
-                  cost={tendency.cost}
-                  key={tendency.id}
-                  id={tendency.id}
-                  tendencyState="negative"
-                  callback={() => ExchangeScore(-tendency.cost)}
-                  optionsFunction={(title, cost, id) =>
-                    EditTendencyModal(title, cost, id)
-                  }
-                />
-              ))}
+          {tendencyList
+            .filter((tendency) => tendency.type === currentTendencyView)
+            .map((tendency) => (
+              <Tendency
+                tendencyList={tendencyList}
+                key={tendency.id}
+                id={tendency.id}
+                setScore={setScore}
+                setTendencyModalState={setTendencyModalState}
+              />
+            ))}
 
           <a className="c-add-tendency_button" onClick={OpenTendencyModal}>
             Add new tendency...
