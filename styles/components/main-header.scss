@@ -1,0 +1,13 @@
+.App-header {
+  background-color: $darker-gray;
+  padding: 20px 30px !important;
+  color: white;
+  margin-bottom: $gap-md;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    margin: 0;
+  }
+}

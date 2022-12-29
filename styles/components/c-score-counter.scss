@@ -1,0 +1,8 @@
+.c-score-counter {
+  left: 8px;
+  position: relative;
+  @include score-counter;
+  span {
+    opacity: 0.5;
+  }
+}

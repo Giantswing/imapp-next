@@ -1,0 +1,31 @@
+//THEME IMPORTS///////////////////
+@import "./theme/breakpoints.scss";
+@import "./theme/spacing.scss";
+@import "./theme/grid.scss";
+@import "./theme/typography.scss";
+@import "./theme/normalize.scss";
+@import "./theme/colors.scss";
+@import "./theme/utilities.scss";
+
+//COMPONENTS//////////////////////
+@import "./components/c-switch-button.scss";
+@import "./components/main-footer.scss";
+@import "./components/main-header.scss";
+@import "./components/c-tendency.scss";
+@import "./components/c-add-tendency-button.scss";
+@import "./components/c-score-counter.scss";
+@import "./components/c-tendency-modal.scss";
+@import "./components/c-main-logo.scss";
+
+a {
+  text-decoration: none;
+}
+
+.App {
+  position: relative;
+}
+
+body {
+  font-family: $font--primary;
+  position: relative;
+}

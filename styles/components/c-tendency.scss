@@ -1,0 +1,51 @@
+.c-tendency {
+  color: white;
+
+  &__main {
+    background-color: gray;
+    padding: 10px 20px;
+    &-title {
+      @include tendency_title;
+      margin: 0;
+    }
+  }
+
+  &--positive {
+    .c-tendency__main {
+      background-color: $positive-color !important;
+    }
+  }
+
+  &--negative {
+    .c-tendency__main {
+      background-color: $negative-color !important;
+    }
+  }
+
+  &:hover {
+    //change pointer
+    cursor: pointer;
+  }
+
+  &__title {
+    @include tendency_title;
+    margin: 0;
+  }
+
+  &__description {
+    background-color: $dark-gray;
+    padding: 10px 20px;
+    &-cost {
+      @include tendency_cost;
+      margin: 0;
+    }
+  }
+}
+
+.tendency-container {
+  display: flex;
+  flex-direction: column;
+  gap: $gap-sm;
+  margin-bottom: $gap-lg;
+  padding-bottom: $gap-xl;
+}

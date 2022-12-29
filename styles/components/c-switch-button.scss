@@ -1,0 +1,17 @@
+.c-switch-button {
+  @include main_button;
+  color: white;
+  padding: 20px;
+  border: none;
+  cursor: pointer;
+  max-width: 1240px;
+  width: calc(100vw - $o-container__gutter-single * 2.85);
+
+  &--positive {
+    background-color: $negative-color;
+  }
+
+  &--negative {
+    background-color: $positive-color;
+  }
+}

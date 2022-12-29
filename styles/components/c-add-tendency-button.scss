@@ -1,0 +1,7 @@
+.c-add-tendency_button {
+  cursor: pointer;
+  margin-top: $gap-sm;
+  color: $dark-gray;
+  margin-left: 15px;
+  @include tendency_title;
+}

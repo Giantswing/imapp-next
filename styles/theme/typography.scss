@@ -1,0 +1,60 @@
+/* TYPOGRAPHY */
+@use "sass:math";
+
+@function strip-unit($value) {
+  @return math.div($value, ($value * 0 + 1));
+}
+
+@mixin fluid-type($min-vw, $max-vw, $min-font-size, $max-font-size) {
+  $u1: unit($min-vw);
+  $u2: unit($max-vw);
+  $u3: unit($min-font-size);
+  $u4: unit($max-font-size);
+
+  @if $u1 ==$u2 and $u1 ==$u3 and $u1 ==$u4 {
+    & {
+      font-size: $min-font-size;
+
+      @media screen and (min-width: $min-vw) {
+        font-size: calc(
+          #{$min-font-size} + #{strip-unit($max-font-size - $min-font-size)} *
+            ((100vw - #{$min-vw}) / #{strip-unit($max-vw - $min-vw)})
+        );
+      }
+
+      @media screen and (min-width: $max-vw) {
+        font-size: $max-font-size;
+      }
+    }
+  }
+}
+
+/***************************************************************/
+
+$font--primary: var(--font-primary);
+$font--secondary: var(--font-secondary);
+
+@mixin score-counter() {
+  font-family: $font--primary;
+  font-weight: 700;
+  @include fluid-type($sm, $xl, 70px, 90px);
+}
+
+@mixin tendency_title() {
+  font-family: $font--primary;
+  font-weight: 500;
+  @include fluid-type($sm, $xl, 20px, 30px);
+}
+
+@mixin tendency_cost() {
+  font-family: $font--primary;
+  font-weight: 300;
+  @include fluid-type($sm, $xl, 20px, 30px);
+}
+
+@mixin main_button() {
+  font-family: $font--primary;
+  font-weight: 300;
+  text-transform: uppercase;
+  @include fluid-type($sm, $xl, 20px, 22px);
+}
