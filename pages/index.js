@@ -93,7 +93,6 @@ function Home() {
       </Head>
 
       <div className="App-header o-container o-container--fluid">
-        <ImappLogo />
         <ScoreCounter score={score} setScoreModalState={setScoreModalState} />
       </div>
 
