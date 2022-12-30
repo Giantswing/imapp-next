@@ -118,13 +118,15 @@ function Home() {
         <div className="tendency-container">
           {tendencyList
             .filter((tendency) => tendency.type === currentTendencyView)
+            .sort((a, b) => (a.title > b.title ? 1 : -1))
             .map((tendency) => (
               <Tendency
-                tendencyList={tendencyList}
                 key={tendency.id}
                 id={tendency.id}
-                score={score}
                 setScore={setScore}
+                score={score}
+                setTendencyList={setTendencyList}
+                tendencyList={tendencyList}
                 setTendencyModalState={setTendencyModalState}
               />
             ))}
