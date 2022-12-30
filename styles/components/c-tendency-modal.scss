@@ -6,9 +6,15 @@
   border: 1px solid black;
   max-width: 1240px;
   width: calc(100vw - $o-container__gutter-single * 2);
-  padding: 40px 20px;
+  padding: 30px 10px;
   box-shadow: 0px 4px 32px rgba(0, 0, 0, 0.65);
   font-family: $font--primary;
+
+  .o-container {
+    display: flex;
+    flex-direction: column;
+    gap: $gap-sm;
+  }
 
   &--hidden {
     display: none;
@@ -16,13 +22,33 @@
 
   h2 {
     margin: 0;
-    margin-bottom: $gap-md;
+    margin-bottom: $gap-sm;
   }
 
   &__form-field {
     display: flex;
     flex-direction: column;
-    gap: 15px;
+    gap: 8px;
+    margin-bottom: $gap-sm;
+
+    label {
+      @include form-description;
+      color: #333;
+      margin: 0;
+    }
+
+    input {
+      //only border bottom
+      border: none;
+      border-bottom: 1px solid black;
+      padding: 10px 0;
+      color: black;
+
+      border-radius: 3px;
+      font-family: $font--primary;
+      font-weight: 400;
+      @include fluid-type($sm, $xl, 18px, 20px);
+    }
   }
 }
 

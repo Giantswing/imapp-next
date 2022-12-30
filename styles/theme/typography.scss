@@ -58,3 +58,16 @@ $font--secondary: var(--font-secondary);
   text-transform: uppercase;
   @include fluid-type($sm, $xl, 20px, 22px);
 }
+
+@mixin secondary_button() {
+  font-family: $font--primary;
+  font-weight: 500;
+  text-transform: uppercase;
+  @include fluid-type($sm, $xl, 16px, 18px);
+}
+
+@mixin form-description() {
+  font-family: $font--primary;
+  font-weight: 500;
+  @include fluid-type($sm, $xl, 15px, 17px);
+}

@@ -1,6 +1,12 @@
 import Image from "next/image";
 
-function Tendency({ tendencyList, id, setScore, setTendencyModalState }) {
+function Tendency({
+  tendencyList,
+  id,
+  score,
+  setScore,
+  setTendencyModalState,
+}) {
   const tendency = tendencyList.find((tendency) => tendency.id === id);
 
   function OpenEditTendencyModal() {
@@ -17,12 +23,18 @@ function Tendency({ tendencyList, id, setScore, setTendencyModalState }) {
 
   function ChangeScore() {
     if (tendency.type === "positive")
-      setScore((prevScore) => prevScore + tendency.cost);
-    else setScore((prevScore) => prevScore - tendency.cost);
+      setScore((prevScore) => prevScore + parseInt(tendency.cost));
+    else setScore((prevScore) => prevScore - parseInt(tendency.cost));
   }
 
   return (
-    <div className={`c-tendency c-tendency--${tendency.type}`}>
+    <div
+      className={`c-tendency c-tendency--${tendency.type} ${
+        score < parseInt(tendency.cost) && tendency.type === "negative"
+          ? "c-tendency--disabled"
+          : ""
+      }`}
+    >
       <div className="c-tendency__main">
         <h3 className="c-tendency__main-title" onClick={() => ChangeScore()}>
           {tendency.title}

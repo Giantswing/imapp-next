@@ -13,18 +13,15 @@ function Home() {
   const [score, setScore] = useState(5);
   const [tendencyModalState, setTendencyModalState] = useState([
     {
-      title: "",
-      cost: 0,
       id: 0,
       visibility: "hidden",
       editMode: false,
     },
   ]);
 
-  const [updateScoreModalState, setUpdateScoreModalState] = useState([
+  const [scoreModalState, setScoreModalState] = useState([
     {
       visibility: "hidden",
-      currentScore: 0,
     },
   ]);
 
@@ -37,9 +34,20 @@ function Home() {
     },
   ]);
 
-  function ExchangeScore(value) {
-    setScore(score + parseInt(value));
-    SaveData(score + parseInt(value));
+  function OpenTendencyModal() {
+    setTendencyModalState([
+      {
+        title: "",
+        cost: 0,
+        id: GenerateKeyID(),
+        visibility: "visible",
+        editMode: false,
+      },
+    ]);
+  }
+
+  function GenerateKeyID() {
+    return Math.random().toString(36).substr(2, 9);
   }
 
   function SaveData(newScore = score) {
@@ -60,90 +68,6 @@ function Home() {
     );
   }
 
-  function OpenTendencyModal() {
-    setTendencyModalState([
-      {
-        title: "",
-        cost: 0,
-        id: GenerateKeyID(),
-        visibility: "visible",
-        editMode: false,
-      },
-    ]);
-  }
-
-  function EditTendencyModal(title, cost, id) {
-    setTendencyModalState([
-      {
-        title: title,
-        cost: cost,
-        id: id,
-        visibility: "visible",
-        editMode: true,
-      },
-    ]);
-  }
-
-  function GenerateKeyID() {
-    return Math.random().toString(36).substr(2, 9);
-  }
-
-  function AddNewTendency(title, cost, id) {
-    if (currentTendencyView === "positive") {
-      //check if tendency already exists
-      if (positiveTendencies.some((tendency) => tendency.id === id)) {
-        const index = positiveTendencies.findIndex(
-          (tendency) => tendency.id === id
-        );
-        positiveTendencies[index].name = title;
-        positiveTendencies[index].cost = cost;
-        positiveTendencies[index].id = id;
-        setPositiveTendencies([...positiveTendencies]);
-      } else {
-        setPositiveTendencies([
-          ...positiveTendencies,
-          { name: title, cost: cost, id: id },
-        ]);
-      }
-    } else {
-      //check if tendency already exists
-      if (negativeTendencies.some((tendency) => tendency.id === id)) {
-        const index = negativeTendencies.findIndex(
-          (tendency) => tendency.id === id
-        );
-        negativeTendencies[index].name = title;
-        negativeTendencies[index].cost = cost;
-        negativeTendencies[index].id = id;
-        setnegativeTendencies([...negativeTendencies]);
-      } else {
-        setnegativeTendencies([
-          ...negativeTendencies,
-          { name: title, cost: cost },
-        ]);
-      }
-    }
-
-    SaveData();
-    CloseTendencyModal();
-  }
-
-  function DeleteTendency(id) {
-    if (currentTendencyView === "positive") {
-      const index = positiveTendencies.findIndex(
-        (tendency) => tendency.id === id
-      );
-      positiveTendencies.splice(index, 1);
-      setPositiveTendencies([...positiveTendencies]);
-    } else {
-      const index = negativeTendencies.findIndex(
-        (tendency) => tendency.id === id
-      );
-      negativeTendencies.splice(index, 1);
-      setnegativeTendencies([...negativeTendencies]);
-    }
-    SaveData();
-  }
-
   useEffect(() => {
     fetch(
       "https://imapp-cfdd0-default-rtdb.europe-west1.firebasedatabase.app/Data.json"
@@ -156,6 +80,10 @@ function Home() {
       });
   }, []);
 
+  useEffect(() => {
+    SaveData();
+  }, [score, tendencyList]);
+
   /***********************************************************************/
 
   return (
@@ -166,16 +94,20 @@ function Home() {
 
       <div className="App-header o-container o-container--fluid">
         <ImappLogo />
-        <ScoreCounter
-          score={score}
-          setUpdateScoreModalState={setUpdateScoreModalState}
-        />
+        <ScoreCounter score={score} setScoreModalState={setScoreModalState} />
       </div>
 
       <div className="o-container">
-        <UpdateScoreModal state={updateScoreModalState} />
+        <UpdateScoreModal
+          score={score}
+          setScore={setScore}
+          scoreModalState={scoreModalState}
+          setScoreModalState={setScoreModalState}
+        />
 
         <TendencyModal
+          tendencyList={tendencyList}
+          setTendencyList={setTendencyList}
           tendencyModalState={tendencyModalState}
           setTendencyModalState={setTendencyModalState}
           currentTendencyView={currentTendencyView}
@@ -189,13 +121,16 @@ function Home() {
                 tendencyList={tendencyList}
                 key={tendency.id}
                 id={tendency.id}
+                score={score}
                 setScore={setScore}
                 setTendencyModalState={setTendencyModalState}
               />
             ))}
 
           <a className="c-add-tendency_button" onClick={OpenTendencyModal}>
-            Add new tendency...
+            Add new{" "}
+            {currentTendencyView === "positive" ? "positive" : "negative"}{" "}
+            tendency...
           </a>
         </div>
 

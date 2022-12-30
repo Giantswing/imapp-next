@@ -1,9 +1,8 @@
-function ScoreCounter({ score, setUpdateScoreModalState }) {
+function ScoreCounter({ score, setScoreModalState }) {
   function OpenScoreModal() {
-    setUpdateScoreModalState([
+    setScoreModalState([
       {
         visibility: "visible",
-        currentScore: score,
       },
     ]);
   }

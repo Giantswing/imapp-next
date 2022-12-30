@@ -1,19 +1,32 @@
 import { useEffect, useState } from "react";
 
 function TendencyModal({
+  tendencyList,
+  setTendencyList,
   tendencyModalState,
   setTendencyModalState,
   currentTendencyView,
 }) {
-  const [title, setTitle] = useState("test");
-  const [cost, setCost] = useState(5);
-  const [editMode, setEditMode] = useState(false);
+  const [currentTitle, setCurrentTitle] = useState("test");
+  const [currentCost, setCurrentCost] = useState(5);
+
+  const displayedTendency = tendencyList.find(
+    (tendency) => tendency.id === tendencyModalState[0].id
+  );
+
+  useEffect(() => {
+    if (displayedTendency) {
+      setCurrentTitle(displayedTendency.title);
+      setCurrentCost(displayedTendency.cost);
+    } else {
+      setCurrentTitle(`New ${currentTendencyView} tendency`);
+      setCurrentCost(5);
+    }
+  }, [displayedTendency, currentTendencyView]);
 
   function CloseTendencyModal() {
     setTendencyModalState([
       {
-        title: "",
-        cost: 0,
         id: 0,
         visibility: "hidden",
         editMode: false,
@@ -21,11 +34,35 @@ function TendencyModal({
     ]);
   }
 
-  useEffect(() => {
-    setTitle(tendencyModalState[0].title);
-    setCost(tendencyModalState[0].cost);
-    setEditMode(tendencyModalState[0].editMode);
-  }, [tendencyModalState]);
+  function CreateOrUpdateTendency() {
+    if (tendencyModalState[0].editMode) {
+      const index = tendencyList.findIndex(
+        (tendency) => tendency.id === tendencyModalState[0].id
+      );
+      tendencyList[index].title = currentTitle;
+      tendencyList[index].cost = currentCost;
+      setTendencyList([...tendencyList]);
+    } else {
+      setTendencyList([
+        ...tendencyList,
+        {
+          title: currentTitle,
+          cost: currentCost,
+          id: tendencyModalState[0].id,
+          type: currentTendencyView,
+        },
+      ]);
+    }
+
+    CloseTendencyModal();
+  }
+
+  function DeleteTendency(id) {
+    const index = tendencyList.findIndex((tendency) => tendency.id === id);
+    tendencyList.splice(index, 1);
+    setTendencyList([...tendencyList]);
+    CloseTendencyModal();
+  }
 
   return (
     <>
@@ -34,56 +71,56 @@ function TendencyModal({
       >
         <div className="o-container">
           <h2>
-            {editMode ? "Edit" : "Add"} {currentTendencyView} tendency
+            {tendencyModalState[0].editMode ? "Edit" : "Add"}{" "}
+            {currentTendencyView} tendency
           </h2>
 
-          <div className="c-tendency-modal__form">
-            <div className="c-tendency-modal__form-field">
-              <label htmlFor="tendency-name">Tendency name</label>
-              <input
-                type="text"
-                id="tendency-name"
-                value={title}
-                onChange={(e) => {
-                  setTitle(e.target.value);
-                }}
-              />
-
-              <label htmlFor="tendency-cost">
-                Tendency{" "}
-                {currentTendencyView === "positive" ? "reward" : "cost"}
-              </label>
-              <input
-                type="number"
-                id="tendency-cost"
-                value={cost}
-                onChange={(e) => {
-                  setCost(e.target.value);
-                }}
-              />
-
-              <button
-                className="c-tendency-modal__form-button"
-                onClick={() => {
-                  addNewTendency(title, cost, tendencyModalState[0].id);
-                }}
-              >
-                {editMode ? "Edit" : "Add"} {currentTendencyView} tendency
-              </button>
-
-              {editMode && (
-                <button
-                  onClick={() => {
-                    deleteFunction(tendencyModalState[0].id);
-                    closeModal();
-                  }}
-                  className="c-tendency-modal__form-button"
-                >
-                  Delete
-                </button>
-              )}
-            </div>
+          <div className="c-tendency-modal__form-field">
+            <label htmlFor="tendency-name">Tendency name</label>
+            <input
+              type="text"
+              id="tendency-name"
+              value={currentTitle}
+              onChange={(e) => {
+                setCurrentTitle(e.target.value);
+              }}
+            />
           </div>
+
+          <div className="c-tendency-modal__form-field">
+            <label htmlFor="tendency-cost">
+              Tendency {currentTendencyView === "positive" ? "reward" : "cost"}
+            </label>
+            <input
+              type="number"
+              id="tendency-cost"
+              value={currentCost}
+              onChange={(e) => {
+                setCurrentCost(e.target.value);
+              }}
+            />
+          </div>
+
+          <button
+            className="c-button"
+            onClick={() => {
+              CreateOrUpdateTendency();
+            }}
+          >
+            {tendencyModalState[0].editMode ? "Edit" : "Add"}{" "}
+            {currentTendencyView} tendency
+          </button>
+
+          {tendencyModalState[0].editMode && (
+            <button
+              onClick={() => {
+                DeleteTendency(tendencyModalState[0].id);
+              }}
+              className="c-button"
+            >
+              Delete
+            </button>
+          )}
         </div>
       </div>
 
