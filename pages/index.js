@@ -10,7 +10,7 @@ import SwitchTendencyButton from "/components/SwitchTendencyButton";
 
 function Home() {
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
-  const [score, setScore] = useState(5);
+  const [score, setScore] = useState(-999);
   const [tendencyModalState, setTendencyModalState] = useState([
     {
       id: 0,
@@ -50,22 +50,24 @@ function Home() {
     return Math.random().toString(36).substr(2, 9);
   }
 
-  function SaveData(newScore = score) {
-    fetch(
-      "https://imapp-cfdd0-default-rtdb.europe-west1.firebasedatabase.app/Data.json",
-      {
-        method: "PUT",
-        body: JSON.stringify([
-          {
-            "Current-Score": newScore,
-            "Tendency-List": tendencyList,
+  function SaveData() {
+    if (score !== -999) {
+      fetch(
+        "https://imapp-cfdd0-default-rtdb.europe-west1.firebasedatabase.app/Data.json",
+        {
+          method: "PUT",
+          body: JSON.stringify([
+            {
+              "Current-Score": score,
+              "Tendency-List": tendencyList,
+            },
+          ]),
+          headers: {
+            "Content-Type": "application/json",
           },
-        ]),
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+        }
+      );
+    }
   }
 
   useEffect(() => {
@@ -80,6 +82,7 @@ function Home() {
       });
   }, []);
 
+  //save data when score or tendency list changes
   useEffect(() => {
     SaveData();
   }, [score, tendencyList]);

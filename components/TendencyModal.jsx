@@ -53,15 +53,12 @@ function TendencyModal({
         },
       ]);
     }
-
-    CloseTendencyModal();
   }
 
   function DeleteTendency(id) {
     const index = tendencyList.findIndex((tendency) => tendency.id === id);
     tendencyList.splice(index, 1);
     setTendencyList([...tendencyList]);
-    CloseTendencyModal();
   }
 
   return (
@@ -70,6 +67,7 @@ function TendencyModal({
         className={`c-tendency-modal c-tendency-modal--${tendencyModalState[0].visibility}`}
       >
         <div className="o-container">
+          <div className="c-tendency-modal__id">{tendencyModalState[0].id}</div>
           <h2>
             {tendencyModalState[0].editMode ? "Edit" : "Add"}{" "}
             {currentTendencyView} tendency
@@ -105,6 +103,7 @@ function TendencyModal({
             className="c-button"
             onClick={() => {
               CreateOrUpdateTendency();
+              CloseTendencyModal();
             }}
           >
             {tendencyModalState[0].editMode ? "Edit" : "Add"}{" "}
@@ -115,6 +114,7 @@ function TendencyModal({
             <button
               onClick={() => {
                 DeleteTendency(tendencyModalState[0].id);
+                CloseTendencyModal();
               }}
               className="c-button"
             >
