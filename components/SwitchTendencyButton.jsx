@@ -29,6 +29,8 @@ function SwitchTendencyButton({
             setPressed(false);
             setEntering(false);
           }, 150);
+
+          window.scrollTo(0, 0);
         }}
       >
         {currentTendencyView === "positive"
