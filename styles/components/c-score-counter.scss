@@ -1,6 +1,19 @@
 .c-score-counter {
   position: relative;
   @include score-counter;
+  transition: transform 0.05s;
+  transform-origin: left;
+
+  &--positive {
+    color: $positive-color;
+    transform: scale(1.15);
+  }
+
+  &--negative {
+    color: $negative-color;
+    transform: scale(1.15);
+  }
+
   span {
     opacity: 0.5;
   }

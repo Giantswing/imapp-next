@@ -1,6 +1,7 @@
 .c-tendency-modal {
   position: fixed;
   width: inherit;
+  top: 12%;
   z-index: 3;
   background-color: white;
   border: 1px solid black;
@@ -11,6 +12,7 @@
   font-family: $font--primary;
 
   &__id {
+    display: none;
     font-size: 12px;
   }
 

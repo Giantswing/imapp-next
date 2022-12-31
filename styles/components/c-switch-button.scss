@@ -1,11 +1,11 @@
 .c-switch-button {
   @include main_button;
   color: white;
-  padding: 20px;
+  padding: 15px 0;
   border: none;
   cursor: pointer;
   max-width: 1240px;
-  width: calc(100vw - $o-container__gutter-single * 2.85);
+  width: calc(100vw - $o-container__gutter-single * 2);
   transition: transform 0.2s;
 
   &--positive {

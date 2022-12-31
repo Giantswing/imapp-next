@@ -4,6 +4,8 @@
   color: white;
   margin-bottom: $gap-sm;
   display: flex;
+  position: fixed;
+  z-index: 1;
 
   h1 {
     margin: 0;

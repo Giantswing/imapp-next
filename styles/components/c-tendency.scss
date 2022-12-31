@@ -71,11 +71,13 @@
 }
 
 .tendency-container {
+  z-index: -1;
   display: flex;
   flex-direction: column;
   gap: $gap-xs;
   margin-bottom: $gap-lg;
   padding-bottom: $gap-xl;
+  padding-top: 110px;
 
   transition: transform 0.2s;
 
