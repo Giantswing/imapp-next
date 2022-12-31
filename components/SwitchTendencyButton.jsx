@@ -1,6 +1,12 @@
 import { useState } from "react";
 
-function SwitchTendencyButton({ currentTendencyView, setCurrentTendencyView }) {
+function SwitchTendencyButton({
+  currentTendencyView,
+  setCurrentTendencyView,
+  setEntering,
+}) {
+  const [pressed, setPressed] = useState(false);
+
   function SwitchTendency() {
     if (currentTendencyView === "positive") {
       setCurrentTendencyView("negative");
@@ -12,9 +18,17 @@ function SwitchTendencyButton({ currentTendencyView, setCurrentTendencyView }) {
   return (
     <div className="main-footer">
       <button
-        className={`c-switch-button c-switch-button--${currentTendencyView}`}
+        className={`c-switch-button c-switch-button--${currentTendencyView} ${
+          pressed ? "c-switch-button--pressed" : ""
+        }`}
         onClick={() => {
           SwitchTendency();
+          setEntering(true);
+          setPressed(true);
+          setTimeout(() => {
+            setPressed(false);
+            setEntering(false);
+          }, 150);
         }}
       >
         {currentTendencyView === "positive"

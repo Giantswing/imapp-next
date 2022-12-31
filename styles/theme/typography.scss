@@ -36,8 +36,8 @@ $font--secondary: var(--font-secondary);
 
 @mixin score-counter() {
   font-family: $font--primary;
-  font-weight: 700;
-  @include fluid-type($sm, $xl, 70px, 90px);
+  font-weight: 400;
+  @include fluid-type($sm, $xl, 60px, 65px);
 }
 
 @mixin tendency_title() {

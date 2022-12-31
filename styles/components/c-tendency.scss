@@ -1,6 +1,9 @@
 .c-tendency {
   color: white;
 
+  //transition the scale of the component
+  transition: transform 0.2s;
+
   &__main {
     background-color: gray;
     padding: 10px;
@@ -32,6 +35,10 @@
     .c-tendency__description-cost {
       color: $negative-color !important;
     }
+  }
+
+  &--pressed {
+    transform: scale(0.9);
   }
 
   &--disabled {
@@ -69,4 +76,10 @@
   gap: $gap-xs;
   margin-bottom: $gap-lg;
   padding-bottom: $gap-xl;
+
+  transition: transform 0.2s;
+
+  &--entering {
+    transform: translateX(-120%);
+  }
 }

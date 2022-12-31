@@ -1,9 +1,10 @@
-import { Space_Grotesk } from "@next/font/google";
+import { Roboto_Condensed } from "@next/font/google";
 import { Dancing_Script } from "@next/font/google";
 
-const font_primary = Space_Grotesk({
+const font_primary = Roboto_Condensed({
   subsets: ["latin"],
   variable: "--font-primary",
+  weight: ["300", "400", "700"],
 });
 
 const font_secondary = Dancing_Script({

@@ -3,7 +3,7 @@ import Head from "next/head";
 
 import ImappLogo from "/components/ImappLogo";
 import ScoreCounter from "/components/ScoreCounter";
-import Tendency from "/components/Tendency";
+import TendencyContainer from "../components/TendencyContainer";
 import TendencyModal from "/components/TendencyModal";
 import UpdateScoreModal from "/components/UpdateScoreModal";
 import SwitchTendencyButton from "/components/SwitchTendencyButton";
@@ -11,6 +11,8 @@ import SwitchTendencyButton from "/components/SwitchTendencyButton";
 function Home() {
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
   const [score, setScore] = useState(-999);
+  const [entering, setEntering] = useState(false);
+
   const [tendencyModalState, setTendencyModalState] = useState([
     {
       id: 0,
@@ -33,22 +35,6 @@ function Home() {
       type: "positive",
     },
   ]);
-
-  function OpenTendencyModal() {
-    setTendencyModalState([
-      {
-        title: "",
-        cost: 0,
-        id: GenerateKeyID(),
-        visibility: "visible",
-        editMode: false,
-      },
-    ]);
-  }
-
-  function GenerateKeyID() {
-    return Math.random().toString(36).substr(2, 9);
-  }
 
   function SaveData() {
     if (score !== -999) {
@@ -115,32 +101,20 @@ function Home() {
           currentTendencyView={currentTendencyView}
         />
 
-        <div className="tendency-container">
-          {tendencyList
-            .filter((tendency) => tendency.type === currentTendencyView)
-            .sort((a, b) => (a.title > b.title ? 1 : -1))
-            .map((tendency) => (
-              <Tendency
-                key={tendency.id}
-                id={tendency.id}
-                setScore={setScore}
-                score={score}
-                setTendencyList={setTendencyList}
-                tendencyList={tendencyList}
-                setTendencyModalState={setTendencyModalState}
-              />
-            ))}
-
-          <a className="c-add-tendency_button" onClick={OpenTendencyModal}>
-            Add new{" "}
-            {currentTendencyView === "positive" ? "positive" : "negative"}{" "}
-            tendency...
-          </a>
-        </div>
+        <TendencyContainer
+          score={score}
+          setScore={setScore}
+          tendencyList={tendencyList}
+          setTendencyList={setTendencyList}
+          setTendencyModalState={setTendencyModalState}
+          currentTendencyView={currentTendencyView}
+          entering={entering}
+        />
 
         <SwitchTendencyButton
           currentTendencyView={currentTendencyView}
           setCurrentTendencyView={setCurrentTendencyView}
+          setEntering={setEntering}
         />
       </div>
     </div>

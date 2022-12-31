@@ -6,6 +6,7 @@
   cursor: pointer;
   max-width: 1240px;
   width: calc(100vw - $o-container__gutter-single * 2.85);
+  transition: transform 0.2s;
 
   &--positive {
     background-color: $negative-color;
@@ -13,5 +14,9 @@
 
   &--negative {
     background-color: $positive-color;
+  }
+
+  &--pressed {
+    transform: scale(0.9);
   }
 }

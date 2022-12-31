@@ -1,4 +1,5 @@
 import Image from "next/image";
+import { useState } from "react";
 
 function Tendency({
   tendencyList,
@@ -8,12 +9,13 @@ function Tendency({
   setTendencyModalState,
 }) {
   const tendency = tendencyList.find((tendency) => tendency.id === id);
+  const [pressed, setPressed] = useState(false);
 
   function OpenEditTendencyModal() {
     setTendencyModalState([
       {
         title: tendency.name,
-        cost: tendency.cost,
+        cost: parseInt(tendency.cost),
         id: tendency.id,
         visibility: "visible",
         editMode: true,
@@ -23,8 +25,8 @@ function Tendency({
 
   function ChangeScore() {
     if (tendency.type === "positive")
-      setScore((prevScore) => prevScore + parseInt(tendency.cost));
-    else setScore((prevScore) => prevScore - parseInt(tendency.cost));
+      setScore((prevScore) => parseInt(prevScore) + parseInt(tendency.cost));
+    else setScore((prevScore) => parseInt(prevScore) - parseInt(tendency.cost));
   }
 
   return (
@@ -33,10 +35,20 @@ function Tendency({
         score < parseInt(tendency.cost) && tendency.type === "negative"
           ? "c-tendency--disabled"
           : ""
-      }`}
+      }${pressed ? "c-tendency--pressed" : ""}`}
     >
       <div className="c-tendency__main">
-        <h3 className="c-tendency__main-title" onClick={() => ChangeScore()}>
+        <h3
+          className="c-tendency__main-title"
+          onClick={() => {
+            ChangeScore();
+            setPressed(true);
+
+            setTimeout(() => {
+              setPressed(false);
+            }, 100);
+          }}
+        >
           {tendency.title}
         </h3>
         <Image
