@@ -33,6 +33,8 @@ function Home() {
       cost: 50,
       id: 654321,
       type: "positive",
+      maxIterations: -1,
+      iterations: 0,
     },
   ]);
 

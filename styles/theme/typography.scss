@@ -48,7 +48,7 @@ $font--secondary: var(--font-secondary);
 
 @mixin tendency_cost() {
   font-family: $font--primary;
-  font-weight: 500;
+  font-weight: 700;
   @include fluid-type($sm, $xl, 17px, 20px);
 }
 
