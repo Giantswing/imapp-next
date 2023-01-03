@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Roboto_Condensed } from "@next/font/google";
 import { Space_Grotesk } from "@next/font/google";
 
@@ -15,9 +16,15 @@ const font_secondary = Space_Grotesk({
 import styles from "/styles/globals.scss";
 
 function MyApp({ Component, pageProps }) {
+  const [currentUser, setCurrentUser] = useState("alex");
+
   return (
     <main className={`${font_primary.variable} ${font_secondary.variable}`}>
-      <Component {...pageProps} />
+      <Component
+        currentUser={currentUser}
+        setCurrentUser={setCurrentUser}
+        {...pageProps}
+      />
     </main>
   );
 }

@@ -1,15 +1,18 @@
 .c-side-menu {
   position: fixed;
-  background-color: $darker-gray;
+  background-color: rgba(10, 10, 10, 0.8);
+  backdrop-filter: blur(6px);
   inset: 0;
   color: white;
   z-index: 5;
   padding: 20px;
-  transition: transform 0.15s ease-in;
+
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 40px;
+
+  transition: transform 0.3s, backdrop-filter 0.7s;
 
   @include main_button;
 
@@ -19,13 +22,31 @@
     justify-content: right;
   }
 
-  &--hidden {
-    transform: translateX(100%);
+  h2 {
+    text-align: center;
+    margin-bottom: $gap-lg;
   }
 
-  &__button {
-    @include side-menu-text;
-    text-decoration: none;
-    color: white;
+  &--hidden {
+    transform: translateX(100%);
+    backdrop-filter: blur(0);
+  }
+
+  &__buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    width: 70%;
+    &__button {
+      padding: 25px;
+      margin-bottom: -1px;
+      width: 100%;
+      text-align: center;
+      border-top: 1px solid gray;
+      border-bottom: 1px solid gray;
+      @include side-menu-text;
+      text-decoration: none;
+      color: white;
+    }
   }
 }

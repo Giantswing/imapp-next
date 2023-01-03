@@ -12,11 +12,10 @@ import SortingMethod from "/components/SortingMethod";
 import FilterMethod from "/components/FilterMethod";
 import SideMenu from "../components/SideMenu";
 
-function Home() {
+function Home({ currentUser }) {
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
   const [score, setScore] = useState(-999);
   const [entering, setEntering] = useState(false);
-
   const [lastDate, setLastDate] = useState();
 
   const [currentSortingMethod, setCurrentSortingMethod] = useState("name");
@@ -134,6 +133,7 @@ function Home() {
       <SideMenu
         sideMenuState={sideMenuState}
         setSideMenuState={setSideMenuState}
+        currentUser={currentUser}
       />
 
       <div className="o-container">
@@ -173,6 +173,7 @@ function Home() {
             currentTendencyView={currentTendencyView}
           />
         </div>
+
         <TendencyContainer
           score={score}
           setScore={setScore}
