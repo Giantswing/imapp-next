@@ -7,6 +7,7 @@ import TendencyContainer from "../components/TendencyContainer";
 import TendencyModal from "/components/TendencyModal";
 import UpdateScoreModal from "/components/UpdateScoreModal";
 import SwitchTendencyButton from "/components/SwitchTendencyButton";
+import SortingMethod from "/components/SortingMethod";
 
 function Home() {
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
@@ -14,6 +15,9 @@ function Home() {
   const [entering, setEntering] = useState(false);
 
   const [lastDate, setLastDate] = useState();
+  const [currentSortingMethod, setCurrentSortingMethod] = useState("name");
+
+  const sortingMethodList = ["name", "cost", "duration"];
 
   const [tendencyModalState, setTendencyModalState] = useState([
     {
@@ -126,6 +130,12 @@ function Home() {
           currentTendencyView={currentTendencyView}
         />
 
+        <SortingMethod
+          currentSortingMethod={currentSortingMethod}
+          setCurrentSortingMethod={setCurrentSortingMethod}
+          sortingMethodList={sortingMethodList}
+        />
+
         <TendencyContainer
           score={score}
           setScore={setScore}
@@ -134,6 +144,7 @@ function Home() {
           setTendencyModalState={setTendencyModalState}
           currentTendencyView={currentTendencyView}
           entering={entering}
+          currentSortingMethod={currentSortingMethod}
         />
 
         <SwitchTendencyButton

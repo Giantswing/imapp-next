@@ -32,7 +32,7 @@ function UpdateScoreModal({
             <button
               className="c-button"
               onClick={() => {
-                setScore(newScore);
+                setScore(parseInt(newScore));
                 setScoreModalState([
                   {
                     visibility: "hidden",

@@ -1,0 +1,14 @@
+.c-sorting-method {
+  display: flex;
+  gap: 15px;
+  margin-bottom: $gap-sm;
+  align-items: center;
+  &__title {
+    @include tendency_title;
+  }
+
+  &__buttons {
+    display: flex;
+    gap: 8px;
+  }
+}

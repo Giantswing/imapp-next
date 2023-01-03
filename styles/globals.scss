@@ -17,6 +17,8 @@
 @import "./components/c-tendency-modal.scss";
 @import "./components/c-main-logo.scss";
 @import "./components/c-button.scss";
+@import "./components/c-sorting-method.scss";
+@import "./components/c-selectable.scss";
 
 a {
   text-decoration: none;
@@ -24,6 +26,7 @@ a {
 
 .App {
   position: relative;
+  padding-top: 105px;
 }
 
 body {

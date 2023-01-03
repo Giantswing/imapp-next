@@ -21,12 +21,14 @@ function Tendency({
     setCurrentIterations(tendency.iterations);
     setCurrentMaxIterations(tendency.maxIterations);
 
+    /*
     if (
       (score < parseInt(tendency.cost) && tendency.type === "negative") ||
       (currentMaxIterations === currentIterations && currentMaxIterations > 0)
     )
       setTendencyDisabled(true);
     else setTendencyDisabled(false);
+    */
   }, [
     score,
     tendency,
@@ -35,6 +37,10 @@ function Tendency({
     currentMaxIterations,
     id,
   ]);
+
+  useEffect(() => {
+    setTendencyDisabled(!tendency.enabled);
+  }, [tendency.enabled]);
 
   const [pressed, setPressed] = useState(false);
 

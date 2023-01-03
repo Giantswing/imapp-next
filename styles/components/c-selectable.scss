@@ -1,0 +1,17 @@
+.c-selectable {
+  @include secondary_button;
+  background-color: transparent;
+  border: 1px solid $darker-gray;
+  border-radius: 15px;
+  padding: 5px 8px;
+  transition: transform 0.05s;
+
+  &:active {
+    transform: scale(0.9);
+  }
+
+  &--selected {
+    background-color: $darker-gray;
+    color: white;
+  }
+}
