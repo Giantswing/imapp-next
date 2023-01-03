@@ -13,6 +13,8 @@ function Home() {
   const [score, setScore] = useState(-999);
   const [entering, setEntering] = useState(false);
 
+  const [lastDate, setLastDate] = useState();
+
   const [tendencyModalState, setTendencyModalState] = useState([
     {
       id: 0,
@@ -29,12 +31,13 @@ function Home() {
 
   const [tendencyList, setTendencyList] = useState([
     {
-      title: "Positive Tendency 1",
+      title: "DEFAULT",
       cost: 50,
       id: 654321,
       type: "positive",
-      maxIterations: -1,
+      maxIterations: 2,
       iterations: 0,
+      duration: 30,
     },
   ]);
 
@@ -46,8 +49,9 @@ function Home() {
           method: "PUT",
           body: JSON.stringify([
             {
-              "Current-Score": score,
+              "Current-Score": parseInt(score),
               "Tendency-List": tendencyList,
+              "Last-Date": lastDate,
             },
           ]),
           headers: {
@@ -59,6 +63,7 @@ function Home() {
   }
 
   useEffect(() => {
+    var newDate = parseInt(new Date().getDate());
     fetch(
       "https://imapp-cfdd0-default-rtdb.europe-west1.firebasedatabase.app/Data.json"
     )
@@ -66,14 +71,30 @@ function Home() {
       .then((data) => {
         setScore(data[0]["Current-Score"]);
         setTendencyList(data[0]["Tendency-List"]);
-        console.log(data);
+        setLastDate(parseInt(data[0]["Last-Date"]));
       });
   }, []);
 
-  //save data when score or tendency list changes
+  useEffect(() => {
+    if (lastDate) {
+      var newDate = parseInt(new Date().getDate());
+
+      if (newDate != lastDate) {
+        var newTendencyList = tendencyList;
+        //reset iterations
+        newTendencyList.map((tendency) => {
+          tendency.iterations = 0;
+        });
+
+        setTendencyList(newTendencyList);
+        setLastDate(newDate);
+      }
+    }
+  }, [lastDate]);
+
   useEffect(() => {
     SaveData();
-  }, [score, tendencyList]);
+  }, [score, tendencyList, lastDate]);
 
   /***********************************************************************/
 
@@ -93,6 +114,8 @@ function Home() {
           setScore={setScore}
           scoreModalState={scoreModalState}
           setScoreModalState={setScoreModalState}
+          tendencyList={tendencyList}
+          setTendencyList={setTendencyList}
         />
 
         <TendencyModal

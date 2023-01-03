@@ -12,7 +12,7 @@
   font-family: $font--primary;
 
   &__id {
-    display: none;
+    //display: none;
     font-size: 12px;
   }
 
@@ -54,6 +54,38 @@
       font-family: $font--primary;
       font-weight: 400;
       @include fluid-type($sm, $xl, 18px, 20px);
+    }
+
+    &--checkbox {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: $gap-md;
+      @include form-description;
+      @include fluid-type($sm, $xl, 18px, 20px);
+      margin-bottom: 0;
+
+      p {
+        margin: 0;
+      }
+
+      input {
+        width: 20px;
+        height: 20px;
+        border: 1px solid black;
+        border-radius: 3px;
+      }
+    }
+  }
+
+  &__group {
+    //display grid 3 elements
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+
+    .c-tendency-modal__form-field {
+      max-width: 45%;
     }
   }
 }

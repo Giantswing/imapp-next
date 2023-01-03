@@ -8,28 +8,33 @@ function Tendency({
   setScore,
   setTendencyModalState,
 }) {
-  const prevTendency = tendencyList.find((tendency) => tendency.id === id);
   const [tendencyDisabled, setTendencyDisabled] = useState(false);
+  const [tendency, setTendency] = useState(
+    tendencyList.find((tendency) => tendency.id === id)
+  );
 
-  if (!prevTendency.iterations) {
-    prevTendency.iterations = 0;
-    prevTendency.maxIterations = -1;
-  }
-
-  if (prevTendency.maxIterations === -1) {
-    prevTendency.maxIterations = 5;
-  }
-
-  const tendency = prevTendency;
+  const [currentIterations, setCurrentIterations] = useState(0);
+  const [currentMaxIterations, setCurrentMaxIterations] = useState(0);
 
   useEffect(() => {
+    setTendency(tendencyList.find((tendency) => tendency.id === id));
+    setCurrentIterations(tendency.iterations);
+    setCurrentMaxIterations(tendency.maxIterations);
+
     if (
       (score < parseInt(tendency.cost) && tendency.type === "negative") ||
-      prevTendency.maxIterations === prevTendency.iterations
+      (currentMaxIterations === currentIterations && currentMaxIterations > 0)
     )
       setTendencyDisabled(true);
     else setTendencyDisabled(false);
-  }, [score, tendency, prevTendency]);
+  }, [
+    score,
+    tendency,
+    tendencyList,
+    currentIterations,
+    currentMaxIterations,
+    id,
+  ]);
 
   const [pressed, setPressed] = useState(false);
 
@@ -51,8 +56,22 @@ function Tendency({
     else setScore((prevScore) => parseInt(prevScore) - parseInt(tendency.cost));
   }
 
+  function IncreaseIterations() {
+    if (parseInt(currentMaxIterations) > 0) {
+      setTendency((prevTendency) => {
+        return {
+          ...prevTendency,
+          iterations: parseInt(currentIterations) + 1,
+        };
+      });
+
+      const index = tendencyList.findIndex((tendency) => tendency.id === id);
+      tendencyList[index].iterations = parseInt(tendency.iterations) + 1;
+    }
+  }
+
   function Iterations() {
-    if (tendency.maxIterations === -1) {
+    if (currentMaxIterations === 0) {
       return (
         <Image
           src="infinite-symbol.svg"
@@ -63,14 +82,15 @@ function Tendency({
       );
     } else {
       var iterations = [];
-      for (var i = 0; i < tendency.maxIterations; i++) {
-        if (i < tendency.iterations) {
+      for (var i = 0; i < currentMaxIterations; i++) {
+        if (i < currentIterations) {
           iterations.push(
             <Image
               src="iteration-full.svg"
               alt="iteration-full"
               width={20}
               height={20}
+              key={i}
             />
           );
         } else {
@@ -80,6 +100,7 @@ function Tendency({
               alt="iteration-empty"
               width={20}
               height={20}
+              key={i}
             />
           );
         }
@@ -100,13 +121,7 @@ function Tendency({
           className="c-tendency__main-title"
           onClick={() => {
             ChangeScore();
-            //increase iterations
-            if (
-              tendency.maxIterations !== -1 &&
-              tendency.iterations < tendency.maxIterations
-            ) {
-              tendency.iterations++;
-            }
+            IncreaseIterations();
 
             setPressed(true);
 

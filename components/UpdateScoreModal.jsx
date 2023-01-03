@@ -5,6 +5,8 @@ function UpdateScoreModal({
   setScore,
   scoreModalState,
   setScoreModalState,
+  tendencyList,
+  setTendencyList,
 }) {
   const [newScore, setNewScore] = useState(score);
   return (
@@ -39,6 +41,29 @@ function UpdateScoreModal({
               }}
             >
               Update score
+            </button>
+          </div>
+
+          <div className="c-update-score-modal__form-field">
+            <button
+              className="c-button"
+              onClick={() => {
+                //reset iterations on tendencyList to 0 if maxIterations is not 0
+                tendencyList.forEach((tendency) => {
+                  if (tendency.maxIterations !== 0) {
+                    tendency.iterations = 0;
+                  }
+                });
+                setTendencyList([...tendencyList]);
+
+                setScoreModalState([
+                  {
+                    visibility: "hidden",
+                  },
+                ]);
+              }}
+            >
+              Reset all iterations
             </button>
           </div>
         </div>
