@@ -28,7 +28,7 @@ function SwitchTendencyButton({
           setTimeout(() => {
             setPressed(false);
             setEntering(false);
-          }, 150);
+          }, 250);
 
           window.scrollTo(0, 0);
         }}
