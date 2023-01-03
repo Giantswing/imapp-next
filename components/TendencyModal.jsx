@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import Selectable from "/components/Selectable";
 
 function TendencyModal({
   tendencyList,
@@ -6,6 +7,8 @@ function TendencyModal({
   tendencyModalState,
   setTendencyModalState,
   currentTendencyView,
+  positiveFilterList,
+  negativeFilterList,
 }) {
   const [currentTitle, setCurrentTitle] = useState("test");
   const [currentCost, setCurrentCost] = useState(5);
@@ -13,10 +16,10 @@ function TendencyModal({
   const [currentIterations, setCurrentIterations] = useState(0);
   const [currentMaxIterations, setCurrentMaxIterations] = useState(0);
   const [currentDuration, setCurrentDuration] = useState(0);
+  const [currentCategory, setCurrentCategory] = useState("all");
 
   const [unlimitedUses, setUnlimitedUses] = useState(true);
 
-  //set displayedTendency state to empty object
   const [displayedTendency, setDisplayedTendency] = useState({});
 
   useEffect(() => {
@@ -36,6 +39,7 @@ function TendencyModal({
       setCurrentIterations(displayedTendency.iterations);
       setCurrentMaxIterations(displayedTendency.maxIterations);
       setCurrentDuration(displayedTendency.duration);
+      setCurrentCategory(displayedTendency.category);
       if (displayedTendency.maxIterations === 0) {
         setUnlimitedUses(true);
       } else setUnlimitedUses(false);
@@ -46,6 +50,7 @@ function TendencyModal({
       setCurrentMaxIterations(5);
       setUnlimitedUses(true);
       setCurrentDuration(0);
+      setCurrentCategory("all");
     }
   }, [
     tendencyModalState.visibility,
@@ -79,6 +84,7 @@ function TendencyModal({
         ? 0
         : parseInt(currentMaxIterations);
       tendencyList[index].duration = parseInt(currentDuration);
+      tendencyList[index].category = currentCategory;
 
       setTendencyList([...tendencyList]);
     } else {
@@ -92,6 +98,7 @@ function TendencyModal({
           iterations: unlimitedUses ? 0 : parseInt(currentIterations),
           maxIterations: unlimitedUses ? 0 : parseInt(currentMaxIterations),
           duration: parseInt(currentDuration),
+          category: currentCategory,
         },
       ]);
     }
@@ -197,6 +204,44 @@ function TendencyModal({
               </div>
             </div>
           )}
+
+          <div className="c-tendency-modal__form-field">
+            <label htmlFor="tendency-type">Tendency category</label>
+            {currentTendencyView === "positive" && (
+              <div className="c-sorting-method__buttons">
+                {positiveFilterList.map((filterMethod) => {
+                  return (
+                    <Selectable
+                      key={filterMethod}
+                      title={filterMethod}
+                      callback={() => {
+                        setCurrentCategory(filterMethod);
+                      }}
+                      selected={filterMethod === currentCategory}
+                    />
+                  );
+                })}
+              </div>
+            )}
+
+            {currentTendencyView === "negative" && (
+              <div className="c-sorting-method__buttons">
+                {negativeFilterList.map((filterMethod) => {
+                  return (
+                    <Selectable
+                      key={filterMethod}
+                      title={filterMethod}
+                      callback={() => {
+                        setCurrentCategory(filterMethod);
+                      }}
+                      selected={filterMethod === currentCategory}
+                    />
+                  );
+                })}
+              </div>
+            )}
+          </div>
+
           <button
             className="c-button"
             onClick={() => {

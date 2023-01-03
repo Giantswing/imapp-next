@@ -1,9 +1,9 @@
 .c-selectable {
-  @include secondary_button;
+  @include filter_selectable;
   background-color: transparent;
-  border: 1px solid $darker-gray;
+  border: 1px solid $dark-gray;
   border-radius: 15px;
-  padding: 5px 8px;
+  padding: 5px 10px;
   transition: transform 0.05s;
 
   &:active {
@@ -11,7 +11,7 @@
   }
 
   &--selected {
-    background-color: $darker-gray;
+    background-color: $dark-gray;
     color: white;
   }
 }

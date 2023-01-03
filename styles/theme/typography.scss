@@ -46,6 +46,13 @@ $font--secondary: var(--font-secondary);
   @include fluid-type($sm, $xl, 19px, 22px);
 }
 
+@mixin filter_selectable() {
+  font-family: $font--primary;
+  font-weight: 700;
+  text-transform: uppercase;
+  @include fluid-type($sm, $xl, 14px, 15px);
+}
+
 @mixin tendency_cost() {
   font-family: $font--primary;
   font-weight: 700;

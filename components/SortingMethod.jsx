@@ -8,7 +8,7 @@ function SortingMethod({
 }) {
   return (
     <div className="c-sorting-method">
-      <div className="c-sorting-method__title">SORT BY</div>
+      <div className="c-sorting-method__title">SORT</div>
       <div className="c-sorting-method__buttons">
         {sortingMethodList.map((sortingMethod) => {
           return (

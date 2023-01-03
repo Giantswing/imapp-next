@@ -1,14 +1,26 @@
 .c-sorting-method {
   display: flex;
-  gap: 15px;
-  margin-bottom: $gap-sm;
-  align-items: center;
+  flex-direction: column;
+  gap: 5px;
+  margin-bottom: $gap-xs;
+  align-items: left;
+  justify-content: center;
+  position: relative;
   &__title {
-    @include tendency_title;
+    @include filter_selectable;
+    padding-left: 3px;
   }
 
   &__buttons {
     display: flex;
-    gap: 8px;
+    flex-wrap: wrap;
+    gap: 5px;
+  }
+}
+
+.c-tendency-modal {
+  .c-sorting-method__buttons {
+    margin-top: 6px;
+    gap: 10px;
   }
 }

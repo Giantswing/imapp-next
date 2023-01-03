@@ -10,9 +10,12 @@ function TendencyContainer({
   currentTendencyView,
   entering,
   currentSortingMethod,
+  currentPositiveFilterMethod,
+  currentNegativeFilterMethod,
 }) {
   const [enabledTendencies, setEnabledTendencies] = useState([]);
   const [disabledTendencies, setDisabledTendencies] = useState([]);
+  const [currentFilterMethod, setCurrentFilterMethod] = useState("all");
 
   function OpenTendencyModal() {
     setTendencyModalState([
@@ -29,8 +32,6 @@ function TendencyContainer({
   function GenerateKeyID() {
     return Math.random().toString(36).substr(2, 9);
   }
-
-  //loop through tendencyList and check if cost is less than score and if iterations is less than maxIterations, if so, add property enabled: true, else add property enabled: false
 
   useEffect(() => {
     setEnabledTendencies(
@@ -52,6 +53,18 @@ function TendencyContainer({
     );
     console.log(enabledTendencies);
   }, [score, tendencyList]);
+
+  useEffect(() => {
+    if (currentTendencyView == "positive") {
+      setCurrentFilterMethod(currentPositiveFilterMethod);
+    } else if (currentTendencyView == "negative") {
+      setCurrentFilterMethod(currentNegativeFilterMethod);
+    }
+  }, [
+    currentTendencyView,
+    currentPositiveFilterMethod,
+    currentNegativeFilterMethod,
+  ]);
 
   return (
     <div
@@ -81,6 +94,10 @@ function TendencyContainer({
             if (a.enabled === b.enabled) return 0;
             if (a.enabled == true && b.enabled == false) return -1;
             if (a.enabled == false && b.enabled == true) return 1;
+          })
+          .filter((tendency) => {
+            if (currentFilterMethod === "all") return true;
+            else return tendency.category === currentFilterMethod;
           })
           .map((tendency) => (
             <Tendency

@@ -20,15 +20,6 @@ function Tendency({
     setTendency(tendencyList.find((tendency) => tendency.id === id));
     setCurrentIterations(tendency.iterations);
     setCurrentMaxIterations(tendency.maxIterations);
-
-    /*
-    if (
-      (score < parseInt(tendency.cost) && tendency.type === "negative") ||
-      (currentMaxIterations === currentIterations && currentMaxIterations > 0)
-    )
-      setTendencyDisabled(true);
-    else setTendencyDisabled(false);
-    */
   }, [
     score,
     tendency,

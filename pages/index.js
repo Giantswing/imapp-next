@@ -8,6 +8,7 @@ import TendencyModal from "/components/TendencyModal";
 import UpdateScoreModal from "/components/UpdateScoreModal";
 import SwitchTendencyButton from "/components/SwitchTendencyButton";
 import SortingMethod from "/components/SortingMethod";
+import FilterMethod from "/components/FilterMethod";
 
 function Home() {
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
@@ -15,9 +16,16 @@ function Home() {
   const [entering, setEntering] = useState(false);
 
   const [lastDate, setLastDate] = useState();
-  const [currentSortingMethod, setCurrentSortingMethod] = useState("name");
 
+  const [currentSortingMethod, setCurrentSortingMethod] = useState("name");
   const sortingMethodList = ["name", "cost", "duration"];
+
+  const [currentPositiveFilterMethod, setCurrentPositiveFilterMethod] =
+    useState("all");
+  const [currentNegativeFilterMethod, setCurrentNegativeFilterMethod] =
+    useState("all");
+  const positiveFilterList = ["all", "home", "diet", "body", "work", "brain"];
+  const negativeFilterList = ["all", "lazy", "eating", "fun"];
 
   const [tendencyModalState, setTendencyModalState] = useState([
     {
@@ -128,14 +136,27 @@ function Home() {
           tendencyModalState={tendencyModalState}
           setTendencyModalState={setTendencyModalState}
           currentTendencyView={currentTendencyView}
+          positiveFilterList={positiveFilterList}
+          negativeFilterList={negativeFilterList}
         />
 
-        <SortingMethod
-          currentSortingMethod={currentSortingMethod}
-          setCurrentSortingMethod={setCurrentSortingMethod}
-          sortingMethodList={sortingMethodList}
-        />
+        <div className="u-m-b-sm">
+          <SortingMethod
+            currentSortingMethod={currentSortingMethod}
+            setCurrentSortingMethod={setCurrentSortingMethod}
+            sortingMethodList={sortingMethodList}
+          />
 
+          <FilterMethod
+            currentPositiveFilterMethod={currentPositiveFilterMethod}
+            setCurrentPositiveFilterMethod={setCurrentPositiveFilterMethod}
+            currentNegativeFilterMethod={currentNegativeFilterMethod}
+            setCurrentNegativeFilterMethod={setCurrentNegativeFilterMethod}
+            positiveFilterList={positiveFilterList}
+            negativeFilterList={negativeFilterList}
+            currentTendencyView={currentTendencyView}
+          />
+        </div>
         <TendencyContainer
           score={score}
           setScore={setScore}
@@ -145,6 +166,8 @@ function Home() {
           currentTendencyView={currentTendencyView}
           entering={entering}
           currentSortingMethod={currentSortingMethod}
+          currentNegativeFilterMethod={currentNegativeFilterMethod}
+          currentPositiveFilterMethod={currentPositiveFilterMethod}
         />
 
         <SwitchTendencyButton

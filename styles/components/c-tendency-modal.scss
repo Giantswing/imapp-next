@@ -1,7 +1,7 @@
 .c-tendency-modal {
   position: fixed;
   width: inherit;
-  top: 12%;
+  top: 30px;
   z-index: 3;
   background-color: white;
   border: 1px solid black;
@@ -34,7 +34,7 @@
   &__form-field {
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 5px;
     margin-bottom: $gap-sm;
 
     label {
@@ -46,11 +46,9 @@
     input {
       //only border bottom
       border: none;
-      border-bottom: 1px solid black;
-      padding: 10px 0;
+      border-bottom: 1px solid gray;
+      padding: 5px 0;
       color: black;
-
-      border-radius: 3px;
       font-family: $font--primary;
       font-weight: 400;
       @include fluid-type($sm, $xl, 18px, 20px);
