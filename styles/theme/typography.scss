@@ -34,6 +34,13 @@
 $font--primary: var(--font-primary);
 $font--secondary: var(--font-secondary);
 
+@mixin side-menu-text() {
+  font-family: $font--secondary;
+  font-weight: 400;
+  text-transform: uppercase;
+  @include fluid-type($sm, $xl, 25px, 28px);
+}
+
 @mixin score-counter() {
   font-family: $font--secondary;
   font-weight: 400;

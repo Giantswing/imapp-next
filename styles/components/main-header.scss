@@ -4,6 +4,8 @@
   color: white;
   margin-bottom: $gap-sm;
   display: flex;
+  justify-content: space-between;
+  align-items: center;
   position: fixed;
   top: 0;
   z-index: 1;

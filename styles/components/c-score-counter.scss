@@ -3,6 +3,7 @@
   @include score-counter;
   transition: transform 0.05s;
   transform-origin: left;
+  z-index: 50;
 
   &--positive {
     color: $positive-color;

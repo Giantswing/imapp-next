@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Head from "next/head";
+import Image from "next/image";
 
 import ImappLogo from "/components/ImappLogo";
 import ScoreCounter from "/components/ScoreCounter";
@@ -9,6 +10,7 @@ import UpdateScoreModal from "/components/UpdateScoreModal";
 import SwitchTendencyButton from "/components/SwitchTendencyButton";
 import SortingMethod from "/components/SortingMethod";
 import FilterMethod from "/components/FilterMethod";
+import SideMenu from "../components/SideMenu";
 
 function Home() {
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
@@ -52,6 +54,8 @@ function Home() {
       duration: 30,
     },
   ]);
+
+  const [sideMenuState, setSideMenuState] = useState("visible");
 
   function SaveData() {
     if (score !== -999) {
@@ -118,7 +122,19 @@ function Home() {
 
       <div className="App-header o-container o-container--fluid">
         <ScoreCounter score={score} setScoreModalState={setScoreModalState} />
+        <Image
+          alt="open menu"
+          src="menu-open.svg"
+          width={40}
+          height={40}
+          onClick={() => setSideMenuState("visible")}
+        />
       </div>
+
+      <SideMenu
+        sideMenuState={sideMenuState}
+        setSideMenuState={setSideMenuState}
+      />
 
       <div className="o-container">
         <UpdateScoreModal
