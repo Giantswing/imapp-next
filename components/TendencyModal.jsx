@@ -12,6 +12,7 @@ function TendencyModal({
 
   const [currentIterations, setCurrentIterations] = useState(0);
   const [currentMaxIterations, setCurrentMaxIterations] = useState(0);
+  const [currentDuration, setCurrentDuration] = useState(0);
 
   const [unlimitedUses, setUnlimitedUses] = useState(true);
 
@@ -34,6 +35,7 @@ function TendencyModal({
       setCurrentCost(displayedTendency.cost);
       setCurrentIterations(displayedTendency.iterations);
       setCurrentMaxIterations(displayedTendency.maxIterations);
+      setCurrentDuration(displayedTendency.duration);
       if (displayedTendency.maxIterations === 0) {
         setUnlimitedUses(true);
       } else setUnlimitedUses(false);
@@ -43,6 +45,7 @@ function TendencyModal({
       setCurrentIterations(0);
       setCurrentMaxIterations(5);
       setUnlimitedUses(true);
+      setCurrentDuration(0);
     }
   }, [
     tendencyModalState.visibility,
@@ -75,6 +78,7 @@ function TendencyModal({
       tendencyList[index].maxIterations = unlimitedUses
         ? 0
         : parseInt(currentMaxIterations);
+      tendencyList[index].duration = parseInt(currentDuration);
 
       setTendencyList([...tendencyList]);
     } else {
@@ -87,6 +91,7 @@ function TendencyModal({
           type: currentTendencyView,
           iterations: unlimitedUses ? 0 : parseInt(currentIterations),
           maxIterations: unlimitedUses ? 0 : parseInt(currentMaxIterations),
+          duration: parseInt(currentDuration),
         },
       ]);
     }
@@ -120,19 +125,36 @@ function TendencyModal({
               }}
             />
           </div>
-          <div className="c-tendency-modal__form-field">
-            <label htmlFor="tendency-cost">
-              T. {currentTendencyView === "positive" ? "reward" : "cost"}
-            </label>
-            <input
-              type="number"
-              id="tendency-cost"
-              value={currentCost || ""}
-              onChange={(e) => {
-                setCurrentCost(e.target.value);
-              }}
-            />
+
+          <div className="c-tendency-modal__group">
+            <div className="c-tendency-modal__form-field">
+              <label htmlFor="tendency-cost">
+                Tendency{" "}
+                {currentTendencyView === "positive" ? "reward" : "cost"}
+              </label>
+              <input
+                type="number"
+                id="tendency-cost"
+                value={currentCost || ""}
+                onChange={(e) => {
+                  setCurrentCost(e.target.value);
+                }}
+              />
+            </div>
+
+            <div className="c-tendency-modal__form-field">
+              <label htmlFor="tendency-duration">Duration</label>
+              <input
+                type="number"
+                id="tendency-duration"
+                value={currentDuration || ""}
+                onChange={(e) => {
+                  setCurrentDuration(e.target.value);
+                }}
+              />
+            </div>
           </div>
+
           <div className="c-tendency-modal__form-field">
             <div className="c-tendency-modal__form-field--checkbox">
               <input

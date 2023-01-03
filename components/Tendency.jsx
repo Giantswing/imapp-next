@@ -144,6 +144,12 @@ function Tendency({
       </div>
       <div className="c-tendency__description">
         <h4 className="c-tendency__description-cost">{tendency.cost}p</h4>
+        {tendency.duration > 0 && (
+          <div className="c-tendency__description_duration">
+            <Image src="time-icon.svg" alt="duration" width={20} height={20} />
+            <p>{tendency.duration} min</p>
+          </div>
+        )}
         <div className="c-tendency__description_iterations">
           <Iterations />
         </div>

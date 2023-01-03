@@ -52,6 +52,12 @@ $font--secondary: var(--font-secondary);
   @include fluid-type($sm, $xl, 17px, 20px);
 }
 
+@mixin tendency_duration() {
+  font-family: $font--primary;
+  font-weight: 400;
+  @include fluid-type($sm, $xl, 17px, 20px);
+}
+
 @mixin main_button() {
   font-family: $font--primary;
   font-weight: 300;
