@@ -55,7 +55,7 @@ function Home() {
     },
   ]);
 
-  const [sideMenuState, setSideMenuState] = useState("visible");
+  const [sideMenuState, setSideMenuState] = useState("hidden");
 
   function SaveData() {
     if (score !== -999) {
