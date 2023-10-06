@@ -18,9 +18,13 @@ import { redirect } from "next/navigation";
 
 function Home() {
   const { data: session } = useSession();
+  var userSaveID = "default";
 
   if (!session) {
     redirect("/api/auth/signin");
+  } else {
+    userSaveID = session.user.email;
+    userSaveID = userSaveID.replace(".", "");
   }
 
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
@@ -54,8 +58,8 @@ function Home() {
 
   const [tendencyList, setTendencyList] = useState([
     {
-      title: "DEFAULT",
-      cost: 50,
+      title: "Go for a run",
+      cost: 20,
       id: 654321,
       type: "positive",
       maxIterations: 2,
@@ -69,7 +73,7 @@ function Home() {
   function SaveData() {
     if (score !== -999) {
       fetch(
-        "https://imapp-cfdd0-default-rtdb.europe-west1.firebasedatabase.app/Data.json",
+        `https://imapp-cfdd0-default-rtdb.europe-west1.firebasedatabase.app/Data/${userSaveID}.json`,
         {
           method: "PUT",
           body: JSON.stringify([
@@ -91,13 +95,17 @@ function Home() {
   useEffect(() => {
     var newDate = parseInt(new Date().getDate());
     fetch(
-      "https://imapp-cfdd0-default-rtdb.europe-west1.firebasedatabase.app/Data.json"
+      `https://imapp-cfdd0-default-rtdb.europe-west1.firebasedatabase.app/Data/${userSaveID}.json`
     )
       .then((response) => response.json())
       .then((data) => {
-        setScore(data[0]["Current-Score"]);
-        setTendencyList(data[0]["Tendency-List"]);
-        setLastDate(parseInt(data[0]["Last-Date"]));
+        if (data != null) {
+          setScore(data[0]["Current-Score"]);
+          setTendencyList(data[0]["Tendency-List"]);
+          setLastDate(parseInt(data[0]["Last-Date"]));
+        } else {
+          setScore(0);
+        }
       });
   }, []);
   /* ----------------------------------------- */

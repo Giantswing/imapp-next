@@ -51,7 +51,6 @@ function TendencyContainer({
         return tendency;
       })
     );
-    console.log(enabledTendencies);
   }, [score, tendencyList]);
 
   useEffect(() => {
