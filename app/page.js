@@ -14,8 +14,15 @@ import FilterMethod from "/components/FilterMethod";
 import SideMenu from "../components/SideMenu";
 
 import { signIn, signOut, useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 function Home() {
+  const { data: session } = useSession();
+
+  if (!session) {
+    redirect("/api/auth/signin");
+  }
+
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
   const [score, setScore] = useState(-999);
   const [entering, setEntering] = useState(false);
@@ -58,7 +65,6 @@ function Home() {
   ]);
 
   const [sideMenuState, setSideMenuState] = useState("hidden");
-  const { data: session } = useSession();
 
   function SaveData() {
     if (score !== -999) {
