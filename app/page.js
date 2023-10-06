@@ -1,5 +1,6 @@
+"use client";
+
 import { useState, useEffect } from "react";
-import Head from "next/head";
 import Image from "next/image";
 
 import ImappLogo from "/components/ImappLogo";
@@ -12,7 +13,9 @@ import SortingMethod from "/components/SortingMethod";
 import FilterMethod from "/components/FilterMethod";
 import SideMenu from "../components/SideMenu";
 
-function Home({ currentUser }) {
+import { signIn, signOut, useSession } from "next-auth/react";
+
+function Home() {
   const [currentTendencyView, setCurrentTendencyView] = useState("positive");
   const [score, setScore] = useState(-999);
   const [entering, setEntering] = useState(false);
@@ -55,6 +58,7 @@ function Home({ currentUser }) {
   ]);
 
   const [sideMenuState, setSideMenuState] = useState("hidden");
+  const { data: session } = useSession();
 
   function SaveData() {
     if (score !== -999) {
@@ -77,6 +81,7 @@ function Home({ currentUser }) {
     }
   }
 
+  /* -------- LOAD DATA FROM FIREBASE -------- */
   useEffect(() => {
     var newDate = parseInt(new Date().getDate());
     fetch(
@@ -89,7 +94,9 @@ function Home({ currentUser }) {
         setLastDate(parseInt(data[0]["Last-Date"]));
       });
   }, []);
+  /* ----------------------------------------- */
 
+  /* -------- RESET ITERATIONS ON NEW DAY -------- */
   useEffect(() => {
     if (lastDate) {
       var newDate = parseInt(new Date().getDate());
@@ -106,6 +113,7 @@ function Home({ currentUser }) {
       }
     }
   }, [lastDate]);
+  /* ---------------------------------------------- */
 
   useEffect(() => {
     SaveData();
@@ -115,10 +123,6 @@ function Home({ currentUser }) {
 
   return (
     <div className="App">
-      <Head>
-        <title>Imapp</title>
-      </Head>
-
       <div className="App-header o-container o-container--fluid">
         <ScoreCounter score={score} setScoreModalState={setScoreModalState} />
         <Image
@@ -133,7 +137,6 @@ function Home({ currentUser }) {
       <SideMenu
         sideMenuState={sideMenuState}
         setSideMenuState={setSideMenuState}
-        currentUser={currentUser}
       />
 
       <div className="o-container">
