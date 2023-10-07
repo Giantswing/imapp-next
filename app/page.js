@@ -3,7 +3,9 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 
-import ImappLogo from "/components/ImappLogo";
+import { app, auth } from "../firebase.js";
+
+// import ImappLogo from "/components/ImappLogo";
 import ScoreCounter from "/components/ScoreCounter";
 import TendencyContainer from "../components/TendencyContainer";
 import TendencyModal from "/components/TendencyModal";
@@ -12,9 +14,9 @@ import SwitchTendencyButton from "/components/SwitchTendencyButton";
 import SortingMethod from "/components/SortingMethod";
 import FilterMethod from "/components/FilterMethod";
 import SideMenu from "../components/SideMenu";
-
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import { getAuth } from "firebase/auth";
 
 function Home() {
   const { data: session } = useSession();

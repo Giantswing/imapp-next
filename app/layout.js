@@ -4,6 +4,7 @@ import { Space_Grotesk } from "next/font/google";
 
 import { getServerSession } from "next-auth";
 import SessionProvider from "../components/SessionProvider";
+import { authOptions } from "./api/auth/[...nextauth]/route";
 
 const font_primary = Roboto_Condensed({
   subsets: ["latin"],
@@ -22,7 +23,7 @@ export const metadata = {
 };
 
 export default async function RootLayout({ children }) {
-  const session = await getServerSession();
+  const session = await getServerSession(authOptions);
 
   return (
     <html lang="en">
